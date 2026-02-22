@@ -1,32 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
+    <title>Job Application Tracker</title>
 
     <!--tailwind + daisy  -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
 
-    <!-- font -->
+    <!-- font  -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
+    <link
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 
     <!-- icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        *{
-            font-family: "Outfit", sans-serif;  
+        * {
+            font-family: "Work Sans", sans-serif;
         }
     </style>
+
+
 </head>
-<body>
-    
+
+<body class="bg-base-200">
+    <header class="">
+
+        <section class="container mx-auto pt-[60px] pb-[30px]">
+            <h1 class="text-[32px] text-[#002C5C] font-bold">Job Application Tracker</h1>
+
+            <div class="number_cards grid grid-cols-1 md:grid-cols-3 gap-4 mt-5 mb-7">
+                <div class="border border-[#F1F2F4] bg-base-100 rounded-[8px] p-5">
+                    <p class="text-[#323B49] font-medium">Total</p>
+                    <p class="text-[24px] font-bold">8</p>
+                </div>
+                <div class="border border-[#F1F2F4] bg-base-100 rounded-[8px] p-5 ">
+                    <p class="text-[#323B49] font-medium">Interview</p>
+                    <p class="text-[24px] text-[#10B981] font-bold">0</p>
+                </div>
+                <div class="border border-[#F1F2F4] bg-base-100 rounded-[8px] p-5">
+                    <p class="text-[#323B49] font-medium">Rejected</p>
+                    <p class="text-[24px] text-[#EF4444] font-bold">0</p>
+                </div>
+            </div>
+            <hr>
+        </section>
+    </header>
+
+    <section id="all_jobs" class="container mx-auto">
+        <h3 class="text-[20px] font-semibold">Available Jobs</h3>
+
+        <div class="job_cards">
+            <div class="jobs bg-base-100 p-6 rounded-lg space-y-2">
+                <h3 class="text-[18px] font-semibold">Mobile First Corp</h3>
+                <p class="text-[#64748B]">React Native Develop</p>
+                <br>
+                <p class="text-[#64748B]">Remote • Full-time • $120,000 - $160,000</p>
+                <button class="btn btn-outline">Not Applied</button>
+                <p class="text-[#64748B]">Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.</p>
+
+                <div class="buttons">
+                    <button class="btn btn-outline btn-success">Interview</button>
+                    <button class="btn btn-outline btn-error">Reject</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="interview">
+
+    </section>
+
+    <section id="rejected">
+
+    </section>
 </body>
+
 </html>
