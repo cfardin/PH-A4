@@ -20,6 +20,14 @@ const rejectSection = document.getElementById('rejected_section');
 const interview_status = "Applied";
 const rejected_status = "Rejected"
 
+const emptyState = `
+    <div class="flex flex-col items-center justify-center py-20 text-center">
+        <img src="images/jobs.png" alt="">
+        <h2 class="text-xl font-semibold text-gray-700">No jobs available</h2>
+        <p class="text-gray-500">Check back soon for new job opportunities</p>
+    </div>
+`;
+
 function calculateJobs() {
     total.innerText = allJobs.children.length;
     interviewCount.innerText = interviewList.length;
@@ -41,10 +49,12 @@ function toggleBtn(id) {
         filterSection.classList.remove('hidden');
         allJobs.classList.add('hidden');
         rejectSection.classList.add('hidden');
+        renderInterview();
     } else if (id == 'rejected_tab') {
         rejectSection.classList.remove('hidden');
         filterSection.classList.add('hidden');
         allJobs.classList.add('hidden');
+        renderInterview();
     } else if (id == 'all_tab') {
         allJobs.classList.remove('hidden');
         filterSection.classList.add('hidden');
@@ -104,9 +114,9 @@ mainContainer.addEventListener('click', function (event) {
             rejectedList.push(cardInfo);
         }
         renderInterview();
-    } 
+    }
     // delete btn feature 
-    else if(event.target.classList.contains('delete_btn')){
+    else if (event.target.classList.contains('delete_btn')) {
         const parentNode = event.target.parentNode.parentNode;
         // const jobName = parentNode.querySelector('.job_name').innerText;
         parentNode.parentNode.remove();
@@ -122,10 +132,13 @@ function renderInterview() {
     filterSection.innerHTML = '';
     rejectSection.innerHTML = '';
 
-    for (let inter of interviewList) {
-        let div = document.createElement('div');
-        div.className = `job_cards pb-4`;
-        div.innerHTML = `
+    if (interviewList.length === 0) {
+        filterSection.innerHTML = emptyState;
+    } else {
+        for (let inter of interviewList) {
+            let div = document.createElement('div');
+            div.className = `job_cards pb-4`;
+            div.innerHTML = `
             <div class="jobs bg-base-100 p-6 rounded-lg space-y-2">
                 <div class="flex justify-between">
                     <h3 class="job_name text-[18px] font-semibold">${inter.jobName}</h3>
@@ -142,13 +155,18 @@ function renderInterview() {
                 </div>
             </div>
         `;
-        filterSection.appendChild(div);
+            filterSection.appendChild(div);
+        }
     }
 
-    for (let rejected of rejectedList) {
-        let div = document.createElement('div');
-        div.className = `job_cards pb-4`;
-        div.innerHTML = `
+
+    if (rejectedList.length === 0) {
+        rejectSection.innerHTML = emptyState;
+    } else {
+        for (let rejected of rejectedList) {
+            let div = document.createElement('div');
+            div.className = `job_cards pb-4`;
+            div.innerHTML = `
             <div class="jobs bg-base-100 p-6 rounded-lg space-y-2">
                 <div class="flex justify-between">
                     <h3 class="job_name text-[18px] font-semibold">${rejected.jobName}</h3>
@@ -165,8 +183,10 @@ function renderInterview() {
                 </div>
             </div>
         `;
-        rejectSection.appendChild(div);
+            rejectSection.appendChild(div);
+        }
     }
+
 
     calculateJobs();
 }
