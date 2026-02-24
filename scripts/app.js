@@ -15,8 +15,12 @@ let allJobs = document.getElementById("all_jobs");
 const mainContainer = document.querySelector("main");
 
 const filterSection = document.getElementById("filter_section");
+const rejectSection = document.getElementById('rejected_section');
 
-function calculateJobs(){
+const interview_status = "Applied";
+const rejected_status = "Rejected"
+
+function calculateJobs() {
     total.innerText = allJobs.children.length;
     interviewCount.innerText = interviewList.length;
     rejectedCount.innerText = rejectedList.length;
@@ -25,7 +29,7 @@ function calculateJobs(){
 calculateJobs();
 
 // for changing tab sections button colors 
-function toggleBtn(id){
+function toggleBtn(id) {
     allTab.classList.remove('bg-primary', 'text-white');
     interviewTab.classList.remove('bg-primary', 'text-white');
     rejectedTab.classList.remove('bg-primary', 'text-white');
@@ -33,12 +37,18 @@ function toggleBtn(id){
     const selectedTab = document.getElementById(id);
     selectedTab.classList.add('bg-primary', 'text-white');
 
-    if(id == "interview_tab"){
+    if (id == "interview_tab") {
         filterSection.classList.remove('hidden');
         allJobs.classList.add('hidden');
-    } else if(id == 'all_tab'){
+        rejectSection.classList.add('hidden');
+    } else if (id == 'all_tab') {
         filterSection.classList.add('hidden');
         allJobs.classList.remove('hidden');
+        rejectSection.classList.add('hidden');
+    } else if(id == 'reject_tab'){
+        rejectSection.classList.remove('hidden');
+        filterSection.classList.add('hidden');
+        allJobs.classList.add('hidden');    
     }
 }
 
@@ -52,11 +62,13 @@ mainContainer.addEventListener('click', function (event) {
         const jobInfo = parentNode.querySelector('.job_info').innerText;
         const jobDis = parentNode.querySelector('.job_dis').innerText;
 
-        
+        parentNode.querySelector('.status_btn').innerText = interview_status;
 
+        const jobStatus = interview_status;
         const cardInfo = {
             jobName,
             jobSub,
+            jobStatus,
             jobInfo,
             jobDis
         };
@@ -64,23 +76,54 @@ mainContainer.addEventListener('click', function (event) {
 
         const jobExist = interviewList.find(items => items.jobName == cardInfo.jobName);
 
-        parentNode.querySelector('.status_btn').innerText = `Applied`;
+
 
         if (!jobExist) {
             interviewList.push(cardInfo);
         }
+        renderInterview('i');
+    }
+    else if (event.target.classList.contains('reject_btn')) {
+        if (event.target.classList.contains('interview_btn')) {
+            const parentNode = event.target.parentNode.parentNode;
+            const jobName = parentNode.querySelector('.job_name').innerText;
+            const jobSub = parentNode.querySelector('.job_subtitle').innerText;
+            const jobInfo = parentNode.querySelector('.job_info').innerText;
+            const jobDis = parentNode.querySelector('.job_dis').innerText;
+
+            parentNode.querySelector('.status_btn').innerText = "rejected";
+            const jobStatus = rejected_status;
+            const cardInfo = {
+                jobName,
+                jobSub,
+                jobStatus,
+                jobInfo,
+                jobDis
+            };
 
 
-        renderInterview();
+            const jobExist = rejectedList.find(items => items.jobName == cardInfo.jobName);
+
+
+
+            if (!jobExist) {
+                interviewList.push(cardInfo);
+            }
+
+
+            renderInterview(r);
+        }
     }
 
 
 });
 
 
-function renderInterview(){
-    console.log('worked');
+function renderInterview(which) {
+
     filterSection.innerText = '';
+    rejectSection.innerText = '';
+
     for (let inter of interviewList) {
         let div = document.createElement('div');
         div.className = `job_cards pb-4`;
@@ -94,7 +137,7 @@ function renderInterview(){
                     <p class="job_subtitle text-[#64748B]">${inter.jobSub}</p>
                     <br>
                     <p class="job_info text-[#64748B]">${inter.jobInfo}</p>
-                    <button class="status_btn btn btn-outline">Not Applied</button>
+                    <button class="status_btn btn btn-outline">${inter.jobStatus}</button>
                     <p class="job_dis text-[#64748B]">${inter.jobDis}</p>
 
                     <div class="buttons">
@@ -103,6 +146,12 @@ function renderInterview(){
                     </div>
                 </div>
         `
-        filterSection.appendChild(div);
+
+        if(which === 'r'){
+            filterSection.appendChild(div);
+        } else {
+            rejectSection.appendChild(div);
+        }
+        
     }
 }
