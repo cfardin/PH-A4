@@ -6,6 +6,8 @@ let total = document.getElementById("total_jobs");
 let interviewCount = document.getElementById("interview_count");
 let rejectedCount = document.getElementById("rejected_count");
 
+let JobsSmall = document.getElementById("jobsSmall")
+
 const allTab = document.getElementById("all_tab");
 const interviewTab = document.getElementById("interview_tab");
 const rejectedTab = document.getElementById("rejected_tab");
@@ -30,6 +32,7 @@ const emptyState = `
 
 function calculateJobs() {
     total.innerText = allJobs.children.length;
+    JobsSmall.innerText = allJobs.children.length;
     interviewCount.innerText = interviewList.length;
     rejectedCount.innerText = rejectedList.length;
 }
@@ -49,11 +52,13 @@ function toggleBtn(id) {
         filterSection.classList.remove('hidden');
         allJobs.classList.add('hidden');
         rejectSection.classList.add('hidden');
+       
         renderInterview();
     } else if (id == 'rejected_tab') {
         rejectSection.classList.remove('hidden');
         filterSection.classList.add('hidden');
         allJobs.classList.add('hidden');
+       
         renderInterview();
     } else if (id == 'all_tab') {
         allJobs.classList.remove('hidden');
@@ -116,8 +121,9 @@ mainContainer.addEventListener('click', function (event) {
         renderInterview();
     }
     // delete btn feature 
-    else if (event.target.classList.contains('delete_btn')) {
-        const parentNode = event.target.parentNode.parentNode;
+    else if (event.target.classList.contains('delete_btn') ||
+    event.target.parentElement.classList.contains('delete_btn') ) {
+        const parentNode = event.target.closest('.jobs');
         // const jobName = parentNode.querySelector('.job_name').innerText;
         parentNode.parentNode.remove();
         calculateJobs();
