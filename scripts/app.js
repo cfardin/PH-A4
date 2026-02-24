@@ -41,20 +41,20 @@ function toggleBtn(id) {
         filterSection.classList.remove('hidden');
         allJobs.classList.add('hidden');
         rejectSection.classList.add('hidden');
+    } else if (id == 'rejected_tab') {
+        rejectSection.classList.remove('hidden');
+        filterSection.classList.add('hidden');
+        allJobs.classList.add('hidden');
     } else if (id == 'all_tab') {
         allJobs.classList.remove('hidden');
         filterSection.classList.add('hidden');
         rejectSection.classList.add('hidden');
-    } else if(id == 'reject_tab'){
-        rejectSection.classList.remove('hidden');
-        filterSection.classList.add('hidden');
-        allJobs.classList.add('hidden');    
     }
 }
 
 
 mainContainer.addEventListener('click', function (event) {
-
+    // copy to interview tab 
     if (event.target.classList.contains('interview_btn')) {
         const parentNode = event.target.parentNode.parentNode;
         const jobName = parentNode.querySelector('.job_name').innerText;
@@ -78,35 +78,45 @@ mainContainer.addEventListener('click', function (event) {
         if (!jobExist) {
             interviewList.push(cardInfo);
         }
-        renderInterview('i');
+        renderInterview();
     }
+    // copy to reject tab 
     else if (event.target.classList.contains('reject_btn')) {
-            const parentNode = event.target.parentNode.parentNode;
-            const jobName = parentNode.querySelector('.job_name').innerText;
-            const jobSub = parentNode.querySelector('.job_subtitle').innerText;
-            const jobInfo = parentNode.querySelector('.job_info').innerText;
-            const jobDis = parentNode.querySelector('.job_dis').innerText;
+        const parentNode = event.target.parentNode.parentNode;
+        const jobName = parentNode.querySelector('.job_name').innerText;
+        const jobSub = parentNode.querySelector('.job_subtitle').innerText;
+        const jobInfo = parentNode.querySelector('.job_info').innerText;
+        const jobDis = parentNode.querySelector('.job_dis').innerText;
 
-            parentNode.querySelector('.status_btn').innerText = "rejected";
-            const jobStatus = rejected_status;
-            const cardInfo = {
-                jobName,
-                jobSub,
-                jobStatus,
-                jobInfo,
-                jobDis
-            };
+        parentNode.querySelector('.status_btn').innerText = "rejected";
+        const jobStatus = rejected_status;
+        const cardInfo = {
+            jobName,
+            jobSub,
+            jobStatus,
+            jobInfo,
+            jobDis
+        };
 
-            const jobExist = rejectedList.find(items => items.jobName == cardInfo.jobName);
+        const jobExist = rejectedList.find(items => items.jobName == cardInfo.jobName);
 
-            if (!jobExist) {
-                rejectedList.push(cardInfo);
-            }
-            renderInterview('r');
+        if (!jobExist) {
+            rejectedList.push(cardInfo);
+        }
+        renderInterview();
+    } 
+    // delete btn feature 
+    else if(event.target.classList.contains('delete_btn')){
+        const parentNode = event.target.parentNode.parentNode;
+        // const jobName = parentNode.querySelector('.job_name').innerText;
+        parentNode.parentNode.remove();
+        calculateJobs();
+        renderInterview();
     }
 
 
 });
+
 
 function renderInterview() {
     filterSection.innerHTML = '';
