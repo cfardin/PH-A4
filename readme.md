@@ -43,6 +43,7 @@ Ans :
 preventDefault():
 - Prevents the default browser behavior for an element
 - Does NOT stop event propagation (bubbling still occurs)
+  
 stopPropagation():
 - Prevents the event from bubbling up to parent elements
 -Default behavior still occurs
