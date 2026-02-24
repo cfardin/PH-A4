@@ -42,8 +42,8 @@ function toggleBtn(id) {
         allJobs.classList.add('hidden');
         rejectSection.classList.add('hidden');
     } else if (id == 'all_tab') {
-        filterSection.classList.add('hidden');
         allJobs.classList.remove('hidden');
+        filterSection.classList.add('hidden');
         rejectSection.classList.add('hidden');
     } else if(id == 'reject_tab'){
         rejectSection.classList.remove('hidden');
@@ -73,10 +73,7 @@ mainContainer.addEventListener('click', function (event) {
             jobDis
         };
 
-
         const jobExist = interviewList.find(items => items.jobName == cardInfo.jobName);
-
-
 
         if (!jobExist) {
             interviewList.push(cardInfo);
@@ -84,7 +81,6 @@ mainContainer.addEventListener('click', function (event) {
         renderInterview('i');
     }
     else if (event.target.classList.contains('reject_btn')) {
-        if (event.target.classList.contains('interview_btn')) {
             const parentNode = event.target.parentNode.parentNode;
             const jobName = parentNode.querySelector('.job_name').innerText;
             const jobSub = parentNode.querySelector('.job_subtitle').innerText;
@@ -101,57 +97,66 @@ mainContainer.addEventListener('click', function (event) {
                 jobDis
             };
 
-
             const jobExist = rejectedList.find(items => items.jobName == cardInfo.jobName);
 
-
-
             if (!jobExist) {
-                interviewList.push(cardInfo);
+                rejectedList.push(cardInfo);
             }
-
-
-            renderInterview(r);
-        }
+            renderInterview('r');
     }
 
 
 });
 
-
-function renderInterview(which) {
-
-    filterSection.innerText = '';
-    rejectSection.innerText = '';
+function renderInterview() {
+    filterSection.innerHTML = '';
+    rejectSection.innerHTML = '';
 
     for (let inter of interviewList) {
         let div = document.createElement('div');
         div.className = `job_cards pb-4`;
         div.innerHTML = `
             <div class="jobs bg-base-100 p-6 rounded-lg space-y-2">
-                    <div class="flex justify-between">
-                        <h3 class="job_name text-[18px] font-semibold">${inter.jobName}</h3>
-                        <button class="delete_btn btn rounded-full"><i class="fa-regular fa-trash-can"></i></button>
-                    </div>
-                   
-                    <p class="job_subtitle text-[#64748B]">${inter.jobSub}</p>
-                    <br>
-                    <p class="job_info text-[#64748B]">${inter.jobInfo}</p>
-                    <button class="status_btn btn btn-outline">${inter.jobStatus}</button>
-                    <p class="job_dis text-[#64748B]">${inter.jobDis}</p>
-
-                    <div class="buttons">
-                        <button class="interview_btn btn btn-outline btn-success">Interview</button>
-                        <button class="reject_btn btn btn-outline btn-error">Reject</button>
-                    </div>
+                <div class="flex justify-between">
+                    <h3 class="job_name text-[18px] font-semibold">${inter.jobName}</h3>
+                    <button class="delete_btn btn rounded-full"><i class="fa-regular fa-trash-can"></i></button>
                 </div>
-        `
-
-        if(which === 'r'){
-            filterSection.appendChild(div);
-        } else {
-            rejectSection.appendChild(div);
-        }
-        
+                <p class="job_subtitle text-[#64748B]">${inter.jobSub}</p>
+                <br>
+                <p class="job_info text-[#64748B]">${inter.jobInfo}</p>
+                <button class="status_btn btn btn-outline">${inter.jobStatus}</button>
+                <p class="job_dis text-[#64748B]">${inter.jobDis}</p>
+                <div class="buttons">
+                    <button class="interview_btn btn btn-outline btn-success">Interview</button>
+                    <button class="reject_btn btn btn-outline btn-error">Reject</button>
+                </div>
+            </div>
+        `;
+        filterSection.appendChild(div);
     }
+
+    for (let rejected of rejectedList) {
+        let div = document.createElement('div');
+        div.className = `job_cards pb-4`;
+        div.innerHTML = `
+            <div class="jobs bg-base-100 p-6 rounded-lg space-y-2">
+                <div class="flex justify-between">
+                    <h3 class="job_name text-[18px] font-semibold">${rejected.jobName}</h3>
+                    <button class="delete_btn btn rounded-full"><i class="fa-regular fa-trash-can"></i></button>
+                </div>
+                <p class="job_subtitle text-[#64748B]">${rejected.jobSub}</p>
+                <br>
+                <p class="job_info text-[#64748B]">${rejected.jobInfo}</p>
+                <button class="status_btn btn btn-outline">${rejected.jobStatus}</button>
+                <p class="job_dis text-[#64748B]">${rejected.jobDis}</p>
+                <div class="buttons">
+                    <button class="interview_btn btn btn-outline btn-success">Interview</button>
+                    <button class="reject_btn btn btn-outline btn-error">Reject</button>
+                </div>
+            </div>
+        `;
+        rejectSection.appendChild(div);
+    }
+
+    calculateJobs();
 }
